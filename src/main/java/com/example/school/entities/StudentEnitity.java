@@ -15,10 +15,6 @@ import java.util.Date;
                         name="student_first_name_unigue",
                         columnNames = {"first_name"}
                 ),
-                @UniqueConstraint(
-                        name="student_last_name_unigue",
-                        columnNames = {"last_name"}
-                )
         }
 )
 public class StudentEnitity {

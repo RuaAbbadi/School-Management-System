@@ -1,5 +1,6 @@
 package com.example.school.dto;
 
+import com.example.school.entities.EnrollmentEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
@@ -7,6 +8,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,14 +28,25 @@ public class Student implements Serializable {
     private String lastName;
 
 
+    private Collection<EnrollmentEntity> enrollments;
+
+    public Collection<EnrollmentEntity> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Collection<EnrollmentEntity> enrollments) {
+        this.enrollments = enrollments;
+    }
+
     public Student() {
     }
 
-    public Student(Long id, Date enrollmentDate, String firstMidName, String lastName) {
+    public Student(Long id, Date enrollmentDate, String firstMidName, String lastName, Collection<EnrollmentEntity> enrollments) {
         this.id = id;
         this.enrollmentDate = enrollmentDate;
         this.firstMidName = firstMidName;
         this.lastName = lastName;
+        this.enrollments = enrollments;
     }
 
     public Long getId() {

@@ -78,4 +78,7 @@ public class CourseEnitity {
     public void setEnrollments(Collection<EnrollmentEntity> enrollments) {
         this.enrollments = enrollments;
     }
+
+
+
 }

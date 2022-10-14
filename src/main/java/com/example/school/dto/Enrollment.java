@@ -1,28 +1,32 @@
-package com.example.school.entities;
+package com.example.school.dto;
 
+import com.example.school.entities.CourseEnitity;
+import com.example.school.entities.Grade;
+import com.example.school.entities.StudentCourseKey;
+import com.example.school.entities.StudentEnitity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@Table(name="enrollment")
-public class EnrollmentEntity {
+public class Enrollment implements Serializable {
 
-    @EmbeddedId // 2 keys as one key
     private StudentCourseKey id ;
 
-    @ManyToOne
-    @MapsId("studentId")
-    @JoinColumn(name="student_id")
     private StudentEnitity studentId;
 
-    @ManyToOne
-    @MapsId("courseId")
-    @JoinColumn(name="course_id")
     private CourseEnitity courseId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 1)
     private Grade grade;
+
+    public Enrollment() {
+    }
+
+    public Enrollment(StudentCourseKey id, StudentEnitity studentId, CourseEnitity courseId, Grade grade) {
+        this.id = id;
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.grade = grade;
+    }
 
     public StudentCourseKey getId() {
         return id;

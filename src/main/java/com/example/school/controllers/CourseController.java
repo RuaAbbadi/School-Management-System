@@ -99,6 +99,7 @@ public class CourseController {
         fillEditModel(model);
         return "courses/create_edit";
     }
+
     @GetMapping("delete/{id}")
     public String delete(@PathVariable long id,HttpSession session ){
         Course course = courseService.deleteById(id);

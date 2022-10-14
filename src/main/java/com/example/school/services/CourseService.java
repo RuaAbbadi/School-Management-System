@@ -53,8 +53,6 @@ public class CourseService {
         return false;
     }
 
-
-
     public Course findById(long id) {
         CourseEnitity entity = courseRepository.findById(id).orElse(null);
         if (entity != null) {

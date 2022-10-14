@@ -8,10 +8,9 @@ import javax.persistence.*;
 public class OfficeAssignmentEntity {
     @Id
     @Column(name="instructor_id")
-    private Long instructorId;
+    private Long id;
 
     private String location;
-
 
 
     @OneToOne
@@ -19,12 +18,13 @@ public class OfficeAssignmentEntity {
     @JoinColumn(name="instructor_id" ,foreignKey = @ForeignKey(name = "instructor_office_assignment_instructor_id_fk"))
     private InstructorEntity instructor;
 
-    public Long getInstructorId() {
-        return instructorId;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setInstructorId(Long instructorId) {
-        this.instructorId = instructorId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLocation() {

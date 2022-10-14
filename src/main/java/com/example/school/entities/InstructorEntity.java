@@ -14,14 +14,9 @@ import java.util.Date;
                         name="instructor_first_name_unigue",
                         columnNames = {"first_name"}
                 ),
-                @UniqueConstraint(
-                        name="instructor_last_name_unigue",
-                        columnNames = {"last_name"}
-                )
         }
 )
 public class InstructorEntity {
-
     @Id
     @SequenceGenerator(
             name = "instructor_sequence",
