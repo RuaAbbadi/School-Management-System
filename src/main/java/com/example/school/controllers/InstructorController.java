@@ -2,14 +2,12 @@ package com.example.school.controllers;
 
 import com.example.school.dto.Instructor;
 import com.example.school.dto.Message;
+import com.example.school.dto.PageDto;
 import com.example.school.services.InstructorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,18 +24,31 @@ public class InstructorController {
     }
 
     @GetMapping
-    public String list(HttpSession session, Model model) {
+    public String list(
+            @RequestParam(value = "p", required = false) Integer currentPage,
+            @RequestParam(value = "d", required = false) String direction,
+            @RequestParam(value = "o", required = false) String orderBy,
+            HttpSession session, Model model
+    ) {
+        boolean ascending = !"desc".equalsIgnoreCase(direction);
+        if (orderBy == null) {
+            orderBy = "firstMidName";
+        }
+        if (currentPage == null) {
+            currentPage = 0;
+        }
         Message message = (Message) session.getAttribute("message");
         if (message != null) {
             model.addAttribute("message", message);
             session.removeAttribute("message");
         }
-        List<Instructor> instructors = instructorService.findAll();
+        PageDto<Instructor> instructors = instructorService.list(currentPage, ascending, orderBy);
         model.addAttribute("instructors", instructors);
         model.addAttribute("title", "Instructors");
         model.addAttribute("current", "Instructors");
         return "instructors/index";
     }
+
 
     @GetMapping("create")
     public String showCreate(Model model, Instructor instructor) {

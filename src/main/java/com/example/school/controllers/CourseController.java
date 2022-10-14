@@ -86,7 +86,7 @@ public class CourseController {
             @Valid FormCourse formCourse,
             BindingResult result, HttpSession session, Model model) {
         if (!result.hasErrors()) {
-            formCourse.setDepartmentId(id);
+            formCourse.setId(id);
             if (courseService.update(formCourse)) {
                 session.setAttribute("message",
                         new Message(formCourse.getTitle() + " updated",

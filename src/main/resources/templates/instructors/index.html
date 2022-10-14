@@ -18,14 +18,19 @@
     <table class="table">
         <thead>
         <tr>
-            <th>First Name</th>
+            <th>First Name
+                <a th:href="@{/instructors?d=__${instructors.ascending?'desc':'asc'}__}">
+                    <i class="glyphicon"
+                       th:classappend="${instructors.ascending?'bi bi-arrow-down':'bi bi-arrow-up'}"></i>
+                </a>
+            </th>
             <th>Last Name</th>
             <th>Hire Date</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="instructor:${instructors}">
+        <tr th:each="instructor:${instructors.content}">
             <td th:text="${instructor.firstMidName}"></td>
             <td th:text="${instructor.lastName}"></td>
             <td th:text="${instructor.hireDate}"></td>
@@ -36,8 +41,20 @@
         </tr>
         </tbody>
     </table>
-
 </div>
+<div class="row container py-5 my-5">
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+        <ul class="pagination  py-5 my-5">
+            <li th:each="i: ${#numbers.sequence(0, instructors.totalPages  )}"
+                th:classappend="${i==instructors.number?'active page-item':''}">
+                <a th:href="@{/instructors?p=__${i}__&d=__${instructors.ascending?'asc':'desc'}__}"
+                   class="page-link"  th:text="${i+1}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <footer th:replace="/layouts/layout :: footer"></footer>
 </body>
 </html>

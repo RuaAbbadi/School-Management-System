@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface InstructorRepository extends CrudRepository<InstructorEntity,Long> {
-
+    Page<InstructorEntity> findAll(Pageable pageable);
 }
