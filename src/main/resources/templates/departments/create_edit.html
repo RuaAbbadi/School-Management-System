@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" lang="en">
+<head th:replace="/layouts/layout :: head"></head>
+<body>
+
+<div th:replace="/layouts/layout :: nav"></div>
+
+<div class="container py-5 my-5">
+    <h3 th:text="${title}"></h3>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible">
+        <strong>Error </strong> <span th:text="${errorMessage}"></span>
+    </div>
+
+    <hr>
+
+    <div class="row shadow rounded">
+        <div class="col-md-6 py-4 mt-2">
+            <form action="" method="post" , th:object="${formDepartment}">
+                <div class="form-group">
+                    <label class="m-2" for="name">Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}">
+                    <span class="text-danger m-2" th:errors="*{name}"></span>
+                </div>
+                <div class="form-group my-3">
+                    <label  class="m-2" for="budget">Budget</label>
+                    <input type="number" class="form-control" id="budget" th:field="*{budget}">
+                    <span class="text-danger m-2" th:errors="*{budget}"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label  class="m-2" for="startDate">Start Date </label>
+                    <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
+                    <span class="text-danger m-2" th:errors="*{startDate}"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="m-2" for="Instructor">Instructor</label>
+                    <select class="form-control" id="Instructor" th:field="*{administratorId}">
+                        <option value="">Please Select Instructor</option>
+                        <option th:each="instructor:${instructors}"
+                                th:text="${instructor.firstMidName}"
+                                th:value="${instructor.id}" th:selected="${instructor.id==__*{administratorId}__}">
+                        </option>
+                    </select>
+                    <span class="text-danger m-2" th:errors="*{administratorId}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-25 mt-3" th:text="${actionLabel}"></button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<footer th:replace="/layouts/layout :: footer"></footer>
+</body>
+</html>

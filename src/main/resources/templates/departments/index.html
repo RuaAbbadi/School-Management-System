@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" lang="en">
+<head th:replace="/layouts/layout :: head"></head>
+<body>
+
+<div th:replace="/layouts/layout :: nav"></div>
+
+<div class="container my-5 py-5">
+    <h3 th:text="${title}"></h3>
+    <a th:href="@{/departments/create}" class="btn btn-primary my-3"><i class="bi bi-plus-lg me-3"></i>Create</a>
+
+    <div th:if="${message}" th:classappend="${message.type == 0?'alert-danger':'alert-success'}"
+         class="alert  alert-dismissible">
+        <strong th:text="${message.type == 0?'Error':'Seccess'}"></strong> <span th:text="${message.message}"></span>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Budget</th>
+            <th>Start Date</th>
+            <th>Instructor</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department:${departments}">
+            <td th:text="${department.name}"></td>
+            <td th:text="${department.budget}"></td>
+            <td th:text="${department.startDate}"></td>
+            <td th:text="${department.administrator==null?'':department.administrator.firstMidName}"></td>
+            <td>
+                <a th:href="@{/departments/edit/__${department.departmentId}__}"><i class="bi bi-pencil-square me-2 fs-4"></i></a>
+                <a th:href="@{/departments/delete/__${department.departmentId}__}"><i class="bi bi-trash-fill fs-4"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<footer th:replace="/layouts/layout :: footer"></footer>
+</body>
+</html>

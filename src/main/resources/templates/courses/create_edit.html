@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" lang="en">
+<head th:replace="/layouts/layout :: head"></head>
+<body>
+
+<div th:replace="/layouts/layout :: nav"></div>
+
+<div class="container py-5 my-5">
+    <h3 th:text="${title}"></h3>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible">
+        <strong>Error </strong> <span th:text="${errorMessage}"></span>
+    </div>
+
+    <hr>
+
+    <div class="row shadow rounded">
+        <div class="col-md-6 py-4 mt-2">
+            <form action="" method="post" , th:object="${formCourse}">
+                <div class="form-group">
+                    <label class="m-2" for="title">Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}">
+                    <span class="text-danger m-2" th:errors="*{title}"></span>
+                </div>
+                <div class="form-group my-3">
+                    <label  class="m-2" for="credits">Credits</label>
+                    <input type="number" class="form-control" id="credits" th:field="*{credits}">
+                    <span class="text-danger m-2" th:errors="*{credits}"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="m-2" for="department">Department</label>
+                    <select class="form-control" id="department" th:field="*{departmentId}">
+                        <option value="">Please Select Department</option>
+                        <option th:each="department:${departments}"
+                                th:text="${department.name}"
+                                th:value="${department.departmentId}" th:selected="${department.departmentId==__*{departmentId}__}">
+                        </option>
+                    </select>
+                    <span class="text-danger m-2" th:errors="*{departmentId}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-25 mt-3" th:text="${actionLabel}"></button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<footer th:replace="/layouts/layout :: footer"></footer>
+</body>
+</html>

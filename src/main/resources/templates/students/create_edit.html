@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" lang="en">
+<head th:replace="/layouts/layout :: head"></head>
+<body>
+
+<div th:replace="/layouts/layout :: nav"></div>
+
+<div class="container py-5 my-5">
+    <h3 th:text="${title}"></h3>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible">
+        <strong>Error!</strong> <span th:text="${errorMessage}"></span>
+    </div>
+
+    <hr>
+
+    <div class="row shadow rounded">
+        <div class="col-md-6 py-4 mt-2">
+            <form action="" method="post" , th:object="${student}">
+                <div class="form-group">
+                    <label class="m-2" for="name">First Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{firstMidName}">
+                    <span class="text-danger" th:errors="*{firstMidName}"></span>
+                </div>
+                <div class="form-group my-3">
+                    <label  class="m-2" for="lastname">Last Name</label>
+                    <input type="text" class="form-control" id="lastname" th:field="*{lastName}">
+                    <span class="text-danger" th:errors="*{lastName}"></span>
+                </div>
+                <div class="form-group">
+                    <label  class="m-2" for="enrollmentDate">Enrollment Date </label>
+                    <input type="date" class="form-control" id="enrollmentDate" th:field="*{enrollmentDate}">
+                    <span class="text-danger" th:errors="*{enrollmentDate}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-25 mt-3" th:text="${actionLabel}"></button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<footer th:replace="/layouts/layout :: footer"></footer>
+</body>
+</html>
