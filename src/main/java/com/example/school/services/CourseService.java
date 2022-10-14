@@ -62,7 +62,7 @@ public class CourseService {
     }
 
     public boolean update(FormCourse formCourse) {
-        CourseEnitity courseEnitity = courseRepository.findById(formCourse.getDepartmentId()).orElse(null);
+        CourseEnitity courseEnitity = courseRepository.findById(formCourse.getId()).orElse(null);
         if (courseEnitity == null) {
             return false;
         }

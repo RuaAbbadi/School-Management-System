@@ -10,6 +10,7 @@ public class OfficeAssignmentEntity {
     @Column(name="instructor_id")
     private Long id;
 
+    @Column(unique = true)
     private String location;
 
 

@@ -28,8 +28,8 @@
       <td th:text="${officeAssignment.location}"></td>
       <td th:text="${officeAssignment.instructor==null ?'':officeAssignment.instructor.firstMidName}"></td>
       <td>
-        <a th:href="@{/templates/office/edit/__${officeAssignment.id}__}"><i class="bi bi-pencil-square me-2 fs-4"></i></a>
-        <a th:href="@{/templates/office/delete/__${officeAssignment.id}__}"><i class="bi bi-trash-fill fs-4"></i></a>
+        <a th:href="@{/office/edit/__${officeAssignment.id}__}"><i class="bi bi-pencil-square me-2 fs-4"></i></a>
+        <a th:href="@{/office/delete/__${officeAssignment.id}__}"><i class="bi bi-trash-fill fs-4"></i></a>
       </td>
     </tr>
     </tbody>
