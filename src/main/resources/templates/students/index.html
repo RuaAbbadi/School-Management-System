@@ -18,14 +18,19 @@
     <table class="table">
         <thead>
         <tr>
-            <th>First Name</th>
+            <th>First Name
+                <a th:href="@{/students?d=__${students.ascending?'desc':'asc'}__}">
+                    <i class="glyphicon"
+                       th:classappend="${students.ascending?'bi bi-arrow-down':'bi bi-arrow-up'}"></i>
+                </a>
+            </th>
             <th>Last Name</th>
             <th>Enrollment Date</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student:${students}">
+        <tr th:each="student:${students.content}">
             <td th:text="${student.firstMidName}"></td>
             <td th:text="${student.lastName}"></td>
             <td th:text="${student.enrollmentDate}"></td>
@@ -36,7 +41,18 @@
         </tr>
         </tbody>
     </table>
-
+</div>
+<div class="row container py-5 my-5">
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+        <ul class="pagination  py-5 my-5">
+            <li th:each="i: ${#numbers.sequence(0, students.totalPages  )}"
+                th:classappend="${i==students.number?'active page-item':''}">
+                <a th:href="@{/students?p=__${i}__&d=__${students.ascending?'asc':'desc'}__}"
+                   class="page-link"  th:text="${i+1}"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 <footer th:replace="/layouts/layout :: footer"></footer>
 </body>

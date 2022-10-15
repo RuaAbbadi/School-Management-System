@@ -1,19 +1,32 @@
 package com.example.school.services;
 
 
+import com.example.school.dto.Instructor;
+import com.example.school.dto.PageDto;
 import com.example.school.dto.Student;
+import com.example.school.entities.InstructorEntity;
 import com.example.school.entities.StudentEnitity;
 import com.example.school.repositories.StudentRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@PropertySource("classpath:school.properties")
 public class StudentService {
+
+    @Value("${school.max.page.size}")
+    private int maxPageSize;
 
     private final StudentRepository studentRepository;
 
@@ -29,6 +42,17 @@ public class StudentService {
         Iterable<StudentEnitity> entities = studentRepository.findAll();
         return mapper.map(entities, new TypeToken<List<Student>>() {
         }.getType());
+    }
+
+    public PageDto<Student> list(int currentPage, boolean ascending, String orderBy) {
+        Sort sort = ascending ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(currentPage, maxPageSize, sort);
+        Page<StudentEnitity> page = studentRepository.findAll(pageable);
+        PageDto<Student> pageDto = mapper.map(page, new TypeToken<PageDto<Student>>() {
+        }.getType());
+        pageDto.setAscending(ascending);
+        pageDto.setOrderBy(orderBy);
+        return pageDto;
     }
 
     public boolean create(Student student) {
