@@ -11,16 +11,15 @@
 
     <div th:if="${message}" th:classappend="${message.type == 0?'alert-danger':'alert-success'}"
          class="alert  alert-dismissible">
-        <strong th:text="${message.type == 0?'Error':'Seccess'}"></strong> <span th:text="${message.message}"></span>
+        <strong th:text="${message.type == 0?'Error':'Succcess'}"></strong> <span th:text="${message.message}"></span>
     </div>
     <hr>
-
     <table class="table">
         <thead>
         <tr>
             <th>First Name
                 <a th:href="@{/instructors?d=__${instructors.ascending?'desc':'asc'}__}">
-                    <i class="glyphicon"
+                    <i
                        th:classappend="${instructors.ascending?'bi bi-arrow-down':'bi bi-arrow-up'}"></i>
                 </a>
             </th>
@@ -36,7 +35,7 @@
             <td th:text="${instructor.hireDate}"></td>
             <td>
                 <button type="button" class="btn btn-primary w-25" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                   <i class="bi bi-trash-fill"></i>
+                    <i class="bi bi-trash"></i>
                 </button>
                 <button type="button" class="btn btn-primary w-25" >
                     <a th:href="@{/instructors/edit/__${instructor.id}__}"><i class="bi bi-pencil-square me-2 text-white"></i></a>
