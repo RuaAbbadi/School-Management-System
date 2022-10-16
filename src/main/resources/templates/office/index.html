@@ -11,7 +11,7 @@
 
   <div th:if="${message}" th:classappend="${message.type == 0?'alert-danger':'alert-success'}"
        class="alert  alert-dismissible">
-    <strong th:text="${message.type == 0?'Error':'Seccess'}"></strong> <span th:text="${message.message}"></span>
+    <strong th:text="${message.type == 0?'Error':'Success'}"></strong> <span th:text="${message.message}"></span>
   </div>
   <hr>
 
@@ -28,9 +28,30 @@
       <td th:text="${officeAssignment.location}"></td>
       <td th:text="${officeAssignment.instructor==null ?'':officeAssignment.instructor.firstMidName}"></td>
       <td>
-        <a th:href="@{/office/edit/__${officeAssignment.id}__}"><i class="bi bi-pencil-square me-2 fs-4"></i></a>
-        <a th:href="@{/office/delete/__${officeAssignment.id}__}"><i class="bi bi-trash-fill fs-4"></i></a>
+        <button type="button" class="btn btn-primary w-25" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="bi bi-trash"></i>
+        </button>
+        <button type="button" class="btn btn-primary w-25" >
+          <a th:href="@{/office/edit/__${officeAssignment.id}__}"><i class="bi bi-pencil-square me-2 text-white"></i></a>
+        </button>
       </td>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete <span class="text-primary" th:text="${officeAssignment.location}">?</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <a type="button" class="btn btn-primary"  th:href="@{/office/delete/__${officeAssignment.id}__}">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </tr>
     </tbody>
   </table>

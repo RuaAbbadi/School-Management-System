@@ -1,16 +1,43 @@
 package com.example.school.dto;
 
 import com.example.school.entities.Grade;
+import com.example.school.entities.StudentCourseKey;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class FormEnrollment implements Serializable {
 
+    private Long id;
+
+    @NotNull(message = "please choose a Student ")
     private Long studentId;
+
+    @NotNull(message = "please choose a Course ")
     private Long courseId;
+
+    @NotNull(message = "please choose a Grade ")
     private Grade grade;
 
+
+    public FormEnrollment() {
+    }
+
+    public FormEnrollment(Long id, Long studentId, Long courseId, Grade grade) {
+        this.id = id;
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.grade = grade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getStudentId() {
         return studentId;
@@ -36,15 +63,6 @@ public class FormEnrollment implements Serializable {
         this.grade = grade;
     }
 
-
-    public FormEnrollment() {
-    }
-
-    public FormEnrollment(Long studentId, Long courseId, Grade grade) {
-        this.studentId = studentId;
-        this.courseId = courseId;
-        this.grade = grade;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -14,19 +14,18 @@ import java.util.Objects;
 public class FormDepartment implements Serializable {
 
     private Long departmentId;
-
     @NotNull
     @Size(min = 3,max = 15)
     private String name;
 
-    @NotNull
+    @NotNull(message = "Enter a Budget")
     private double budget;
 
     @NotNull(message = "Please choose a Date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @NotNull(message = "Please choose a Instructor")
+    @NotNull(message = "Please choose Instructor")
     public Long administratorId;
 
     public FormDepartment() {

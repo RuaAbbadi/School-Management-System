@@ -71,7 +71,7 @@ public class EnrollmentService {
     }
 
     public boolean update(FormEnrollment formEnrollment) {
-        EnrollmentEntity enrollment = enrollmentRepository.findById(formEnrollment.getStudentId()).orElse(null);
+        EnrollmentEntity enrollment = enrollmentRepository.findById(formEnrollment.getId()).orElse(null);
         if (enrollment == null) {
             return false;
         }

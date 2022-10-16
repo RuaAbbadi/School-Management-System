@@ -74,7 +74,7 @@ public class OfficeAssignmentController {
                 officeAssignment.getId(),officeAssignment.getLocation(), officeAssignment.getInstructor() != null ? officeAssignment.getInstructor().getId() : null
         );
         model.addAttribute("formOfficeAssignment", formOfficeAssignment);
-        return "officeAssignments/create_edit";
+        return "office/create_edit";
     }
 
     @PostMapping("edit/{id}")

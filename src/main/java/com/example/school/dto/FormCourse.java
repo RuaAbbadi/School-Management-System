@@ -8,13 +8,13 @@ import java.util.Objects;
 public class FormCourse implements Serializable {
 
     private Long id;
-    @NotNull
+    @NotNull(message = "Size must be between 3 and 15")
     @Size(min = 3,max = 15)
     private String title;
-    @NotNull
+    @NotNull(message = "Please enter credits")
     private Integer credits;
 
-    @NotNull(message = "Please choode a department")
+    @NotNull(message = "Please choose a department")
     private Long departmentId;
 
     public FormCourse() {

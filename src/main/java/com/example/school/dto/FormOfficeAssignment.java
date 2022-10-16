@@ -10,7 +10,7 @@ public class FormOfficeAssignment implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min=3,max = 5)
+    @Size(min=3,max = 15)
     private String location;
 
 

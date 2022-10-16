@@ -83,7 +83,7 @@ public class EnrollmentController {
         fillEditModel(model);
         Enrollment enrollment = enrollmentService.findById(id);
         FormEnrollment formEnrollment = new FormEnrollment(
-             enrollment.getStudentId()!= null ? enrollment.getStudentId().getId() : null ,  enrollment.getCourseId()!= null ? enrollment.getCourseId().getId() : null,
+      enrollment.getId().getStudentId(),enrollment.getStudentId()!= null ? enrollment.getStudentId().getId() : null ,  enrollment.getCourseId()!= null ? enrollment.getCourseId().getId() : null,
                 enrollment.getGrade()
         );
         model.addAttribute("formEnrollment", formEnrollment);

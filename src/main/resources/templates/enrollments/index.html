@@ -11,7 +11,7 @@
 
     <div th:if="${message}" th:classappend="${message.type == 0?'alert-danger':'alert-success'}"
          class="alert  alert-dismissible">
-        <strong th:text="${message.type == 0?'Error':'Seccess'}"></strong> <span th:text="${message.message}"></span>
+        <strong th:text="${message.type == 0?'Error':'Success'}"></strong> <span th:text="${message.message}"></span>
     </div>
     <hr>
 
