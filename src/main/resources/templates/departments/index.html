@@ -18,7 +18,12 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>Name
+                <a th:href="@{/departments?d=__${departments.ascending?'desc':'asc'}__}">
+                    <i
+                            th:classappend="${departments.ascending?'bi bi-arrow-down':'bi bi-arrow-up'}"></i>
+                </a>
+            </th>
             <th>Budget</th>
             <th>Start Date</th>
             <th>Instructor</th>
@@ -26,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="department:${departments}">
+        <tr th:each="department:${departments.content}">
             <td th:text="${department.name}"></td>
             <td th:text="${department.budget}"></td>
             <td th:text="${department.startDate}"></td>
@@ -63,7 +68,18 @@
         </tr>
         </tbody>
     </table>
-
+</div>
+<div class="row container py-5 my-5">
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+        <ul class="pagination  py-5 my-5">
+            <li th:each="i: ${#numbers.sequence(0, departments.totalPages  )}"
+                th:classappend="${i==departments.number?'active page-item':''}">
+                <a th:href="@{/departments?p=__${i}__&d=__${departments.ascending?'asc':'desc'}__}"
+                   class="page-link"  th:text="${i+1}"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 <footer th:replace="/layouts/layout :: footer"></footer>
 </body>

@@ -3,20 +3,32 @@ package com.example.school.services;
 
 import com.example.school.dto.Department;
 import com.example.school.dto.FormDepartment;
+import com.example.school.dto.Instructor;
+import com.example.school.dto.PageDto;
 import com.example.school.entities.DepartmentEntity;
 import com.example.school.entities.InstructorEntity;
 import com.example.school.repositories.DepartmentRepository;
 import com.example.school.repositories.InstructorRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@PropertySource("classpath:school.properties")
 public class DepartmentService {
+
+    @Value("${school.max.page.size}")
+    private int maxPageSize;
 
     private final DepartmentRepository departmentRepository;
 
@@ -33,6 +45,17 @@ public class DepartmentService {
         Iterable<DepartmentEntity> entities = departmentRepository.findAll();
         return mapper.map(entities, new TypeToken<List<Department>>() {
         }.getType());
+    }
+
+    public PageDto<Department> list(int currentPage, boolean ascending, String orderBy) {
+        Sort sort = ascending ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(currentPage, maxPageSize, sort);
+        Page<DepartmentEntity> page = departmentRepository.findAll(pageable);
+        PageDto<Department> pageDto = mapper.map(page, new TypeToken<PageDto<Department>>() {
+        }.getType());
+        pageDto.setAscending(ascending);
+        pageDto.setOrderBy(orderBy);
+        return pageDto;
     }
 
     public boolean create(FormDepartment formDepartment) {

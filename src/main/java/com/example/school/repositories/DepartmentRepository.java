@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DepartmentRepository extends CrudRepository<DepartmentEntity,Long> {
+    Page<DepartmentEntity> findAll(Pageable pageable);
+
 
 }

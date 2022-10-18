@@ -1,18 +1,13 @@
 package com.example.school.controllers;
 
 
-import com.example.school.dto.Department;
-import com.example.school.dto.FormDepartment;
-import com.example.school.dto.Message;
+import com.example.school.dto.*;
 import com.example.school.services.DepartmentService;
 import com.example.school.services.InstructorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -31,13 +26,25 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public String list(HttpSession session, Model model) {
+    public String list(
+            @RequestParam(value = "p", required = false) Integer currentPage,
+            @RequestParam(value = "d", required = false) String direction,
+            @RequestParam(value = "o", required = false) String orderBy,
+            HttpSession session, Model model
+    ) {
+        boolean ascending = !"desc".equalsIgnoreCase(direction);
+        if (orderBy == null) {
+            orderBy = "name";
+        }
+        if (currentPage == null) {
+            currentPage = 0;
+        }
         Message message = (Message) session.getAttribute("message");
         if (message != null) {
             model.addAttribute("message", message);
             session.removeAttribute("message");
         }
-        List<Department> departments = departmentService.findAll();
+        PageDto<Department> departments = departmentService.list(currentPage, ascending, orderBy);
         model.addAttribute("departments", departments);
         model.addAttribute("title", "Departments");
         model.addAttribute("current", "Departments");
