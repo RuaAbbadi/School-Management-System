@@ -1,9 +1,6 @@
 package com.example.school.services;
 
-import com.example.school.dto.Course;
-import com.example.school.dto.Department;
-import com.example.school.dto.FormCourse;
-import com.example.school.dto.FormDepartment;
+import com.example.school.dto.*;
 import com.example.school.entities.CourseEnitity;
 import com.example.school.entities.DepartmentEntity;
 import com.example.school.entities.InstructorEntity;
@@ -11,14 +8,24 @@ import com.example.school.repositories.CourseRepository;
 import com.example.school.repositories.DepartmentRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@PropertySource("classpath:school.properties")
 public class CourseService {
+
+    @Value("${school.max.page.size}")
+    private int maxPageSize;
 
     private final CourseRepository courseRepository;
 
@@ -37,6 +44,18 @@ public class CourseService {
         return mapper.map(entities, new TypeToken<List<Course>>() {
         }.getType());
     }
+
+    public PageDto<Course> list(int currentPage, boolean ascending, String orderBy) {
+        Sort sort = ascending ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(currentPage, maxPageSize, sort);
+        Page<CourseEnitity> page = courseRepository.findAll(pageable);
+        PageDto<Course> pageDto = mapper.map(page, new TypeToken<PageDto<Course>>() {
+        }.getType());
+        pageDto.setAscending(ascending);
+        pageDto.setOrderBy(orderBy);
+        return pageDto;
+    }
+
 
 
     public boolean create(FormCourse formCourse) {

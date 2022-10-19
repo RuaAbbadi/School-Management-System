@@ -18,14 +18,18 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Title</th>
+            <th>Title
+                <a th:href="@{/courses?d=__${courses.ascending?'desc':'asc'}__}">
+                    <i th:classappend="${courses.ascending?'bi bi-arrow-down':'bi bi-arrow-up'}"></i>
+                </a>
+            </th>
             <th>Credits</th>
             <th>Department</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="course:${courses}">
+        <tr th:each="course:${courses.content}">
             <td th:text="${course.title}"></td>
             <td th:text="${course.credits}"></td>
             <td th:text="${course.department==null?'':course.department.name}"></td>
@@ -57,7 +61,18 @@
         </tr>
         </tbody>
     </table>
-
+</div>
+<div class="row container py-5 my-5">
+    <div class="col-md-6"></div>
+    <div class="col-md-3">
+        <ul class="pagination  py-5 my-5">
+            <li th:each="i: ${#numbers.sequence(0, courses.totalPages  )}"
+                th:classappend="${i==courses.number?'active page-item':''}">
+                <a th:href="@{/courses?p=__${i}__&d=__${courses.ascending?'asc':'desc'}__}"
+                   class="page-link"  th:text="${i+1}"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 <footer th:replace="/layouts/layout :: footer"></footer>
 </body>
